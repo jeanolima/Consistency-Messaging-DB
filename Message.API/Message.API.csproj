@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Message.Domain\Message.Domain.csproj" />
     <ProjectReference Include="..\Message.Producer\Message.Producer.csproj" />
   </ItemGroup>
 

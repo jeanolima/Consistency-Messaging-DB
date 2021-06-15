@@ -11,9 +11,11 @@
     <PackageReference Include="Rebus" Version="6.5.5" />
     <PackageReference Include="Rebus.RabbitMq" Version="7.3.0" />
     <PackageReference Include="Rebus.ServiceProvider" Version="6.4.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Message.Domain\Message.Domain.csproj" />
     <ProjectReference Include="..\Message.Producer\Message.Producer.csproj" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 using Message.Consumer.Model;
+using Message.Domain;
 using Message.Producer;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -8,41 +9,22 @@ using System.Threading.Tasks;
 
 namespace Message.Consumer.Handler
 {
-    public class MessageConsumerHandler : IHandleMessages<string>
+    public class MessageConsumerHandler : IHandleMessages<Person>
     {
         private readonly ILogger _logger;
-        private readonly IPublisher _publisher;
+        private readonly IMessageService _service;
         private readonly IBus _bus;
 
-        public MessageConsumerHandler(ILogger<MessageConsumerHandler> logger, IPublisher publisher, IBus bus)
+        public MessageConsumerHandler(ILogger<MessageConsumerHandler> logger, IMessageService service, IBus bus)
         {
             _logger = logger;
-            _publisher = publisher;
+            _service = service;
             _bus = bus;
         }
 
-        public Task Handle(string message)
+        public async Task Handle(Person message)
         {
-            _logger.LogInformation("String consumer received message: {message}", message);
-
-            string connectionString = "mongodb://mongo:mongo@localhost:27017";
-            var client = new MongoClient(connectionString);
-
-            IMongoDatabase db = client.GetDatabase("MessageDb");
-            IMongoCollection<object> messageEventCollection = db.GetCollection<object>("MessageEvent");
-
-            _logger.LogInformation("String consumer - saving message to mongo.");
-            Person finalmessage = new Person()
-            {
-                Name = "Person",
-                LastName = "Last stop"
-            };
-            messageEventCollection.InsertOne(message);
-            _logger.LogInformation("String consumer - message saved to db");
-
-            _publisher.Send(finalmessage);
-
-            return Task.CompletedTask;
+            await _service.Process(message);
         }
     }
 }

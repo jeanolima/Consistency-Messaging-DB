@@ -1,12 +1,14 @@
 using Message.Consumer.Handler;
 using Message.Consumer.Model;
 using Message.Producer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rebus.Activation;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
 using Rebus.ServiceProvider;
+using System.Configuration;
 
 namespace Message.Consumer
 {

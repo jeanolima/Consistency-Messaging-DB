@@ -1,12 +1,8 @@
-﻿using Message.Producer;
-using Microsoft.AspNetCore.Http;
+﻿using Message.Consumer.Model;
+using Message.Producer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Rebus.Bus;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Message.API.Controllers
 {
@@ -22,11 +18,10 @@ namespace Message.API.Controllers
             _publisher = publisher;
         }
 
-        [HttpGet]
-        public Dictionary<bool, string> Get()
+        [HttpPost]
+        public Dictionary<bool, string> Post(Person model)
         {
-            string message = "string test";
-            _publisher.Send(message);
+            _publisher.Send(model);
             return new Dictionary<bool, string>();
         }
     }

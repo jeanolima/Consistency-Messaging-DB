@@ -16,12 +16,19 @@ namespace Message.Producer
             this._logger = logger;
         }
 
-        public async Task Send(object obj)
+        public async Task Send(object obj, bool shouldFail)
         {
             _logger.LogInformation("Publisher - About to publish the message to rabbitmq topic.");
+           
+            if(shouldFail)
+            {
+                await _bus.Publish(obj);
+            }
+            else
+            {
+                await _bus.Send(obj);
+            }
             
-            await _bus.Publish(obj);
-
             _logger.LogInformation("Publisher - Published the message to the topic.");
         }
     }
